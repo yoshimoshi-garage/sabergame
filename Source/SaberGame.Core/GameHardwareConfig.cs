@@ -1,4 +1,5 @@
-﻿using Meadow.Hardware;
+﻿using Meadow.Foundation.Audio;
+using Meadow.Hardware;
 
 namespace SaberGame.Core;
 
@@ -12,4 +13,5 @@ public class GameHardwareConfig
     public IDigitalInterruptPort RightScoreUp { get; set; }
     public IDigitalInterruptPort RightScoreDown { get; set; }
     public IGameDisplay Display { get; set; }
+    public PiezoSpeaker? Piezo { get; set; }
 }

@@ -22,10 +22,12 @@ public class Max7219Display : IGameDisplay
 
         // displays are numbered from right-end back, so 0,1 are red, 2,3 are green
         // green display are much dimmer than red, so try to equalize here
+        _display.SetBrightness(6, 0);
+        _display.SetBrightness(6, 1);
         _display.SetBrightness(15, 2);
         _display.SetBrightness(15, 3);
 
-        _screen = new DisplayScreen(_display, RotationType._90Degrees);
+        _screen = new DisplayScreen(_display, RotationType._270Degrees);
 
         leftLabel = new DisplayLabel(1, 0, _screen.Width / 2, _screen.Height);
         rightLabel = new DisplayLabel(_screen.Width / 2, 0, _screen.Width / 2, _screen.Height);

@@ -1,5 +1,6 @@
 ﻿using Meadow;
 using Meadow.Hardware;
+using Meadow.Units;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,6 +93,24 @@ public class Game
         }
     }
 
+    private Frequency _beepLow = new Frequency(4000);
+    private Frequency _beepHigh = new Frequency(4500);
+
+    private void Beep()
+    {
+        if (_hardware.Piezo == null) return;
+
+        Task.Run(async () =>
+        {
+            var duration = TimeSpan.FromMilliseconds(50);
+            for (var i = 0; i < 8; i++)
+            {
+                await _hardware.Piezo.PlayTone(_beepLow, duration);
+                await _hardware.Piezo.PlayTone(_beepHigh, duration);
+            }
+        });
+    }
+
     private void OnLeftSaberContact(object sender, DigitalPortResult e)
     {
         if (_state == GameState.WaitingForTouch)
@@ -99,6 +118,7 @@ public class Game
             _scoreLeft++;
             _currentTouch = TouchState.Left;
             _state = GameState.Touched;
+            Beep();
 
             Resolver.Log.Info("TOUCH LEFT");
         }
@@ -111,6 +131,7 @@ public class Game
             _scoreRight++;
             _currentTouch = TouchState.Right;
             _state = GameState.Touched;
+            Beep();
 
             Resolver.Log.Info("TOUCH RIGHT");
         }
