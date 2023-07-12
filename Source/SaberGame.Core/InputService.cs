@@ -2,7 +2,7 @@
 
 namespace SaberGame.Core;
 
-public class GameHardwareConfig : IInputService
+public class InputService : IInputService
 {
     public IDigitalInterruptPort LeftSaber { get; set; }
     public IDigitalInterruptPort RightSaber { get; set; }

@@ -59,6 +59,12 @@ public class Max7219DisplayService : IDisplayService
             rightLabel);
     }
 
+    public void ShowText(string text)
+    {
+        rightBox.Visible = leftBox.Visible = rightLabel.Visible = false;
+        leftLabel.Text = text;
+    }
+
     public void ShowScore(int left, int right)
     {
         rightBox.Visible = leftBox.Visible = false;

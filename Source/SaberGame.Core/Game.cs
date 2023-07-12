@@ -8,6 +8,8 @@ namespace SaberGame.Core;
 
 public class Game
 {
+    public const string AppVersion = "v1.0";
+
     private GameState _state = GameState.ScoreUpdate;
     private int _scoreLeft = 0;
     private int _scoreRight = 0;
@@ -50,7 +52,8 @@ public class Game
     {
         if (_gameLoop == null)
         {
-            _audioService?.Beep(); // beep once now to force interp to build the audio pipeline
+            _displayService?.ShowText(AppVersion);
+            Thread.Sleep(2000);
 
             _gameLoop = new Thread(GameLoop);
             _gameLoop.Start();

@@ -2,8 +2,13 @@
 
 namespace SaberGame_Desktop
 {
-    public class ConsoleDisplay : IGameDisplay
+    public class ConsoleDisplayService : IDisplayService
     {
+        public void ShowText(string text)
+        {
+            Console.WriteLine(text);
+        }
+
         public void ShowScore(int left, int right)
         {
             Console.WriteLine($"Score is now L:{left} R:{right}");

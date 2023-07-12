@@ -15,7 +15,7 @@ namespace SaberGame
         public override Task Initialize()
         {
             Resolver.Services.Add<IInputService>(
-                new GameHardwareConfig
+                new InputService
                 {
                     LeftSaber = Device.Pins.D00.CreateDigitalInterruptPort(
                         InterruptMode.EdgeRising, ResistorMode.InternalPullDown,
@@ -43,7 +43,8 @@ namespace SaberGame
             Resolver.Services.Add<IDisplayService>(
                 new Max7219DisplayService(
                     Device.CreateSpiBus(),
-                    Device.Pins.D15.CreateDigitalOutputPort()),);
+                    Device.Pins.D15.CreateDigitalOutputPort()));
+
             Resolver.Services.Add<IAudioService>(
                 new FeatherAudioService(
                     Device.Pins.D03));
