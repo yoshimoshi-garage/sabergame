@@ -1,8 +1,8 @@
 ﻿namespace SaberGame.Core;
 
-public interface IGameDisplay
+public interface IDisplayService
 {
+    void ShowScore(int left, int right);
     void ShowTouchLeft();
     void ShowTouchRight();
-    void ShowScore(int left, int right);
 }

@@ -6,7 +6,7 @@ using MicroLayout;
 
 namespace SaberGame.Core;
 
-public class Max7219Display : IGameDisplay
+public class Max7219DisplayService : IDisplayService
 {
     private Max7219 _display = default!;
 
@@ -16,7 +16,7 @@ public class Max7219Display : IGameDisplay
     private DisplayBox leftBox;
     private DisplayBox rightBox;
 
-    public Max7219Display(ISpiBus bus, IDigitalOutputPort cs)
+    public Max7219DisplayService(ISpiBus bus, IDigitalOutputPort cs)
     {
         _display = new Max7219(bus, cs, 4);
 

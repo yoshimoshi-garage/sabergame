@@ -30,7 +30,7 @@ namespace SaberGame_Desktop
                 RightScoreUp = _keyboard.Pins.W.CreateDigitalInterruptPort(InterruptMode.EdgeRising),
                 RightScoreDown = _keyboard.Pins.S.CreateDigitalInterruptPort(InterruptMode.EdgeRising),
                 Reset = _keyboard.Pins.D.CreateDigitalInterruptPort(InterruptMode.EdgeRising),
-                Display = new Max7219Display(
+                Display = new Max7219DisplayService(
                     _expander.CreateSpiBus(),
                     _expander.Pins.C0.CreateDigitalOutputPort()
                     )

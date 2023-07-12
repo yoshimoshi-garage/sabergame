@@ -8,43 +8,50 @@ namespace SaberGame.Core;
 
 public class Game
 {
-    private GameHardwareConfig _hardware;
     private GameState _state = GameState.ScoreUpdate;
     private int _scoreLeft = 0;
     private int _scoreRight = 0;
     private TouchState _currentTouch;
     private Thread? _gameLoop = null;
+
     private IAudioService? _audioService;
+    private IDisplayService? _displayService;
+    private IInputService? _inputService;
 
     private const int GameLoopPeriodMs = 200;
 
     public TimeSpan PostTouchDelay { get; set; } = TimeSpan.FromSeconds(3);
 
-    public Game(GameHardwareConfig hardware)
+    public Game()
     {
-        if (!ValidateHardwareSetup(hardware))
+        _audioService = Resolver.Services.Get<IAudioService>();
+        _displayService = Resolver.Services.Get<IDisplayService>();
+        _inputService = Resolver.Services.Get<IInputService>();
+
+        if (!ValidateHardwareSetup())
         {
             Resolver.Log.Error("INCORRECT HARDWARE SETUP");
             return;
         }
 
-        _audioService = Resolver.Services.Get<IAudioService>();
-
-        _hardware = hardware;
-
-        _hardware.LeftSaber.Changed += OnLeftSaberContact;
-        _hardware.RightSaber.Changed += OnRightSaberContact;
-        _hardware.Reset.Changed += OnReset;
-        _hardware.LeftScoreUp.Changed += OnLeftScoreUp;
-        _hardware.LeftScoreDown.Changed += OnLeftScoreDown;
-        _hardware.RightScoreUp.Changed += OnRightScoreUp;
-        _hardware.RightScoreDown.Changed += OnRightScoreDown;
+        if (_inputService != null) // this gets checked in the validation above
+        {
+            _inputService.LeftSaber.Changed += OnLeftSaberContact;
+            _inputService.RightSaber.Changed += OnRightSaberContact;
+            _inputService.Reset.Changed += OnReset;
+            _inputService.LeftScoreUp.Changed += OnLeftScoreUp;
+            _inputService.LeftScoreDown.Changed += OnLeftScoreDown;
+            _inputService.RightScoreUp.Changed += OnRightScoreUp;
+            _inputService.RightScoreDown.Changed += OnRightScoreDown;
+        }
     }
 
     public void Start()
     {
         if (_gameLoop == null)
         {
+            _audioService?.Beep(); // beep once now to force interp to build the audio pipeline
+
             _gameLoop = new Thread(GameLoop);
             _gameLoop.Start();
         }
@@ -121,14 +128,20 @@ public class Game
         }
     }
 
-    private bool ValidateHardwareSetup(GameHardwareConfig hardware)
+    private bool ValidateHardwareSetup()
     {
-        if (hardware.LeftSaber.InterruptMode == InterruptMode.None)
+        if (_inputService == null)
+        {
+            Resolver.Log.Error("No InputService!");
+            return false;
+        }
+
+        if (_inputService.LeftSaber.InterruptMode == InterruptMode.None)
         {
             Resolver.Log.Error("Left saber is not set for interrupts");
             return false;
         }
-        if (hardware.RightSaber.InterruptMode == InterruptMode.None)
+        if (_inputService.RightSaber.InterruptMode == InterruptMode.None)
         {
             Resolver.Log.Error("Right saber is not set for interrupts");
             return false;
@@ -152,7 +165,7 @@ public class Game
             switch (_state)
             {
                 case GameState.ScoreUpdate:
-                    _hardware.Display.ShowScore(_scoreLeft, _scoreRight);
+                    _displayService?.ShowScore(_scoreLeft, _scoreRight);
                     _state = GameState.WaitingForTouch;
                     break;
                 case GameState.WaitingForTouch:
@@ -163,10 +176,10 @@ public class Game
                     switch (_currentTouch)
                     {
                         case TouchState.Right:
-                            _hardware.Display.ShowTouchRight();
+                            _displayService?.ShowTouchRight();
                             break;
                         case TouchState.Left:
-                            _hardware.Display.ShowTouchLeft();
+                            _displayService?.ShowTouchLeft();
                             break;
                     }
 
