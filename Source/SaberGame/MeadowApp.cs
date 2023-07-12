@@ -1,6 +1,5 @@
 ﻿using Meadow;
 using Meadow.Devices;
-using Meadow.Foundation.Audio;
 using Meadow.Hardware;
 using SaberGame.Core;
 using System;
@@ -40,9 +39,10 @@ namespace SaberGame
                     TimeSpan.FromMilliseconds(ButtonDebounceDurationMs), TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
                 Display = new Max7219Display(
                     Device.CreateSpiBus(), Device.Pins.D15.CreateDigitalOutputPort()),
-                Piezo = new PiezoSpeaker(Device.Pins.D03)
                 // Piezo on D06
             };
+
+            Resolver.Services.Add<IAudioService>(new FeatherAudioService(Device.Pins.D03));
 
             _game = new Game(config);
 

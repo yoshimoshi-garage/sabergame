@@ -1,6 +1,5 @@
 ﻿using Meadow;
 using Meadow.Hardware;
-using Meadow.Units;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ public class Game
     private int _scoreRight = 0;
     private TouchState _currentTouch;
     private Thread? _gameLoop = null;
+    private IAudioService? _audioService;
 
     private const int GameLoopPeriodMs = 200;
 
@@ -27,6 +27,8 @@ public class Game
             Resolver.Log.Error("INCORRECT HARDWARE SETUP");
             return;
         }
+
+        _audioService = Resolver.Services.Get<IAudioService>();
 
         _hardware = hardware;
 
@@ -93,24 +95,6 @@ public class Game
         }
     }
 
-    private Frequency _beepLow = new Frequency(4000);
-    private Frequency _beepHigh = new Frequency(4500);
-
-    private void Beep()
-    {
-        if (_hardware.Piezo == null) return;
-
-        Task.Run(async () =>
-        {
-            var duration = TimeSpan.FromMilliseconds(50);
-            for (var i = 0; i < 8; i++)
-            {
-                await _hardware.Piezo.PlayTone(_beepLow, duration);
-                await _hardware.Piezo.PlayTone(_beepHigh, duration);
-            }
-        });
-    }
-
     private void OnLeftSaberContact(object sender, DigitalPortResult e)
     {
         if (_state == GameState.WaitingForTouch)
@@ -118,7 +102,7 @@ public class Game
             _scoreLeft++;
             _currentTouch = TouchState.Left;
             _state = GameState.Touched;
-            Beep();
+            _ = _audioService?.Beep();
 
             Resolver.Log.Info("TOUCH LEFT");
         }
@@ -131,7 +115,7 @@ public class Game
             _scoreRight++;
             _currentTouch = TouchState.Right;
             _state = GameState.Touched;
-            Beep();
+            _ = _audioService?.Beep();
 
             Resolver.Log.Info("TOUCH RIGHT");
         }
