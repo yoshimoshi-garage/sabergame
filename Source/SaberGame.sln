@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaberGame_Feather", "SaberG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meadow.F7", "..\..\..\wilderness\Meadow.Core\source\implementations\f7\Meadow.F7\Meadow.F7.csproj", "{4AF24C76-AB0D-468A-9DDF-5D2E4950C7A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaberGameMobile", "SaberGameMobile\SaberGameMobile.csproj", "{DCEC9219-CA7B-471D-AFB0-B8C702A020A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{4AF24C76-AB0D-468A-9DDF-5D2E4950C7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AF24C76-AB0D-468A-9DDF-5D2E4950C7A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AF24C76-AB0D-468A-9DDF-5D2E4950C7A6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DCEC9219-CA7B-471D-AFB0-B8C702A020A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCEC9219-CA7B-471D-AFB0-B8C702A020A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCEC9219-CA7B-471D-AFB0-B8C702A020A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCEC9219-CA7B-471D-AFB0-B8C702A020A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
