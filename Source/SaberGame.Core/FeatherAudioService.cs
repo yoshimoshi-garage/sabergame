@@ -12,6 +12,8 @@ public class FeatherAudioService : IAudioService
     private Frequency _beepLow = new Frequency(4000);
     private Frequency _beepHigh = new Frequency(4500);
 
+    public bool Mute { get; set; } = false;
+
     public FeatherAudioService(IPin piezoPin)
     {
         _piezo = new PiezoSpeaker(piezoPin);
@@ -19,6 +21,8 @@ public class FeatherAudioService : IAudioService
 
     public async Task Beep()
     {
+        if (Mute) return;
+
         var duration = TimeSpan.FromMilliseconds(20);
         for (var i = 0; i < 8; i++)
         {
