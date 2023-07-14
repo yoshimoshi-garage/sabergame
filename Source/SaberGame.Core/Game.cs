@@ -8,7 +8,7 @@ namespace SaberGame.Core;
 
 public class Game
 {
-    public const string AppVersion = "v1.0";
+    public const string AppVersion = "v1.1";
 
     private GameState _state = GameState.ScoreUpdate;
     private int _scoreLeft = 0;
@@ -64,7 +64,9 @@ public class Game
     {
         if (_state == GameState.WaitingForTouch)
         {
-            _scoreLeft++;
+            var s = _scoreLeft + 1;
+            if (s > 99) s = 0; // wrap at 99 since we only have room for 2 digits
+            _scoreLeft = s;
             _state = GameState.ScoreUpdate;
         }
     }
@@ -73,8 +75,12 @@ public class Game
     {
         if (_state == GameState.WaitingForTouch)
         {
-            _scoreLeft--;
-            _state = GameState.ScoreUpdate;
+            var s = _scoreLeft - 1;
+            if (s >= 0) // negative score is meaningless
+            {
+                _scoreLeft = s;
+                _state = GameState.ScoreUpdate;
+            }
         }
     }
 
@@ -82,7 +88,9 @@ public class Game
     {
         if (_state == GameState.WaitingForTouch)
         {
-            _scoreRight++;
+            var s = _scoreRight + 1;
+            if (s > 99) s = 0; // wrap at 99 since we only have room for 2 digits
+            _scoreRight = s;
             _state = GameState.ScoreUpdate;
         }
     }
@@ -91,7 +99,12 @@ public class Game
     {
         if (_state == GameState.WaitingForTouch)
         {
-            _scoreRight--;
+            var s = _scoreRight - 1;
+            if (s >= 0) // negative score is meaningless
+            {
+                _scoreRight = s;
+                _state = GameState.ScoreUpdate;
+            }
             _state = GameState.ScoreUpdate;
         }
     }
@@ -109,7 +122,9 @@ public class Game
     {
         if (_state == GameState.WaitingForTouch)
         {
-            _scoreLeft++;
+            var s = _scoreLeft + 1;
+            if (s > 99) s = 0; // wrap at 99 since we only have room for 2 digits
+            _scoreLeft = s;
             _currentTouch = TouchState.Left;
             _state = GameState.Touched;
             _ = _audioService?.Beep();
@@ -122,7 +137,9 @@ public class Game
     {
         if (_state == GameState.WaitingForTouch)
         {
-            _scoreRight++;
+            var s = _scoreRight + 1;
+            if (s > 99) s = 0; // wrap at 99 since we only have room for 2 digits
+            _scoreRight = s;
             _currentTouch = TouchState.Right;
             _state = GameState.Touched;
             _ = _audioService?.Beep();
