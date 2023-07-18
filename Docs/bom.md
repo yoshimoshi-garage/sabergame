@@ -13,7 +13,7 @@ This is a list of materials used to build SaberGame (not including floor cords o
 | 1 | piezo | https://amzn.to/43qJ35q |
 | 6 | Screw terminals | https://amzn.to/44rQDyi |
 | 1 | 1100 mAh LiPo battery | https://amzn.to/3roch7L |
-| 2 | 10k resistors (pull-downs) | Out of my electronics bin |
+| 2 | 1k resistors (pull-downs) | Out of my electronics bin |
 | 1 | Printed body | See the Repo STLs |
 | 1 | Printed back | See the Repo STLs |
 | 1 | Printed face | See the Repo STLs |

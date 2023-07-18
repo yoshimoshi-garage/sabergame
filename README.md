@@ -7,6 +7,7 @@ Saber Game is a simple hardware training tool to allow two fencers to comete aga
 | | | | | |
 | - | - | - | - | -|
 | <img src="Docs/front.jpg" width=90% /> | <img src="Docs/top.jpg" width=90% /> | <img src="Docs/bottom.jpg" width=90% /> | <img src="Docs/left.jpg" width=90% /> | <img src="Docs/right.jpg" width=90% />
-Included are the code, [bill-of-materials](Docs/bom.md), [STL files](Hardware) for printing the enclosure.
+
+Included are the code, [bill-of-materials](Docs/bom.md), [STL files](Hardware) for printing the enclosure and the [schematic](Docs/Schematic_SaberGame_v1.0.pdf).
 
 PRs, feature requests, bug fixes, etc. are all welcome.
