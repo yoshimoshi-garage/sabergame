@@ -58,6 +58,9 @@ namespace SaberGame
                 new FeatherAudioService(
                     Device.Pins.D03));
 
+            Resolver.Services.Add<ICommunicationService>(
+                new FeatherCommunicationService(Device.BluetoothAdapter));
+
             _game = new Game();
 
             return base.Initialize();
