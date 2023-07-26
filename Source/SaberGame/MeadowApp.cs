@@ -10,7 +10,9 @@ namespace SaberGame
     public class MeadowApp : App<F7FeatherV2>
     {
         private Game _game = default!;
+        private const int TouchDebounceDurationMs = 50;
         private const int ButtonDebounceDurationMs = 100;
+        private const int GlitchFilterDurationms = 1;
 
         public override Task Initialize()
         {
@@ -19,25 +21,32 @@ namespace SaberGame
                 {
                     LeftSaber = Device.Pins.D00.CreateDigitalInterruptPort(
                         InterruptMode.EdgeRising, ResistorMode.InternalPullDown,
-                        TimeSpan.FromMilliseconds(50), TimeSpan.Zero),
+                        TimeSpan.FromMilliseconds(TouchDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(GlitchFilterDurationms)),
                     RightSaber = Device.Pins.D01.CreateDigitalInterruptPort(
                         InterruptMode.EdgeRising, ResistorMode.InternalPullDown,
-                        TimeSpan.FromMilliseconds(50), TimeSpan.Zero),
+                        TimeSpan.FromMilliseconds(TouchDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(GlitchFilterDurationms)),
                     LeftScoreUp = Device.Pins.D07.CreateDigitalInterruptPort(
                         InterruptMode.EdgeFalling, ResistorMode.InternalPullUp,
-                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs), TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
                     LeftScoreDown = Device.Pins.D05.CreateDigitalInterruptPort(
                         InterruptMode.EdgeFalling, ResistorMode.InternalPullUp,
-                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs), TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
                     RightScoreUp = Device.Pins.D12.CreateDigitalInterruptPort(
                         InterruptMode.EdgeFalling, ResistorMode.InternalPullUp,
-                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs), TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
                     RightScoreDown = Device.Pins.D08.CreateDigitalInterruptPort(
                         InterruptMode.EdgeFalling, ResistorMode.InternalPullUp,
-                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs), TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs)),
                     Reset = Device.Pins.D13.CreateDigitalInterruptPort(
                         InterruptMode.EdgeFalling, ResistorMode.InternalPullUp,
-                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs), TimeSpan.FromMilliseconds(ButtonDebounceDurationMs))
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs),
+                        TimeSpan.FromMilliseconds(ButtonDebounceDurationMs))
                 });
 
             Resolver.Services.Add<IDisplayService>(
